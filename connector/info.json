@@ -1,0 +1,130 @@
+{
+    "name": "org-productName",
+    "version": "1.0.0",
+    "label": "Org ProductName",
+    "description": "Naming convention. Organization ProductName",
+    "publisher": "anonyges@gmail.com",
+    "icon_small_name": "",
+    "icon_large_name": "",
+    "category": [
+        "Analytics and SIEM"
+    ],
+    "configuration": {
+        "fields": [
+            {
+                "title": "URL",
+                "type": "text",
+                "name": "url",
+                "required": true,
+                "visible": true,
+                "editable": true
+            },
+            {
+                "title": "API Key",
+                "type": "text",
+                "name": "api_key",
+                "required": true,
+                "visible": true,
+                "editable": true
+            },
+            {
+                "title": "Verify SSL",
+                "type": "checkbox",
+                "name": "verify_ssl",
+                "required": false,
+                "visible": true,
+                "editable": true,
+                "value": true
+            }
+        ]
+    },
+    "operations": [
+        {
+            "operation": "generic_api_call",
+            "title": "Generic API call",
+            "description": "Makes API call to the given endpoint.",
+            "enabled": true,
+            "category": "",
+            "annotation": "",
+            "TEMPLATE_NOTE6": "--OUTPUT SCHEMA IS A SAMPLE RESPONSE FROM THIS CONNECTOR ACTION--",
+            "output_schema": {
+                "result": "",
+                "api_data": ""
+            },
+            "parameters": [
+                {
+                    "title": "api_endpoint",
+                    "type": "text",
+                    "name": "api_endpoint",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "",
+                    "tooltip": "should include the whole string eg) \"\""
+                },
+                {
+                    "title": "headers",
+                    "type": "object",
+                    "name": "headers",
+                    "required": false,
+                    "visible": false,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": ""
+                },
+                {
+                    "title": "data",
+                    "type": "object",
+                    "name": "data",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null
+                },
+                {
+                    "title": "parameters",
+                    "type": "object",
+                    "name": "parameters",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null
+                },
+                {
+                    "title": "method",
+                    "type": "select",
+                    "name": "method",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "GET",
+                    "options": [
+                        "GET",
+                        "PUT",
+                        "POST",
+                        "DELETE",
+                        "PATCH",
+                        "HEAD",
+                        "OPTIONS",
+                        "TRACE"
+                    ]
+                }
+            ],
+            "open": false
+        },
+        {
+            "operation": "do_something",
+            "title": "Do Something",
+            "description": "Do Something and Returns Something.",
+            "enabled": true,
+            "open": false
+        },
+        {
+            "operation": "raise_error",
+            "title": "Raise Error",
+            "description": "Raise Error!",
+            "enabled": true,
+            "open": false
+        }
+    ]
+}
