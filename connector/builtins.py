@@ -3,12 +3,14 @@ from .custom_connector import CustomConnector
 from connectors.core.connector import get_logger, ConnectorError
 
 
-def health_check(config: dict):
-    pass
+def health_check(config: dict, params: dict=None):
+    conn = CustomConnector()
+    return conn.health_check(config, params)
 
 
 def generic_api_call(config: dict, params: dict):
-    pass
+    conn = CustomConnector()
+    return conn.generic_api_call(config, params)
 
 
 def do_something(config: dict, params: dict) -> dict:
@@ -23,6 +25,7 @@ def raise_error(config: dict, params: dict) -> dict:
 
 
 supported_operations = {
+    "health_check": health_check,
     "generic_api_call": generic_api_call,
     "do_something": do_something,
     "raise_error": raise_error,

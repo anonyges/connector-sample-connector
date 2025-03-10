@@ -1,8 +1,8 @@
 {
-    "name": "org-productName",
+    "name": "sample-connector",
     "version": "1.0.0",
-    "label": "Org ProductName",
-    "description": "Naming convention. Organization ProductName",
+    "label": "Sample Connector",
+    "description": "Naming convention.\nTitle should be change from \"Sample Connector\" --> \"Organization ProductName\"\nAPI name should change from \"sample-connector\" --> \"org-productName\"",
     "publisher": "anonyges@gmail.com",
     "icon_small_name": "",
     "icon_large_name": "",
@@ -60,35 +60,7 @@
                     "visible": true,
                     "editable": true,
                     "value": "",
-                    "tooltip": "should include the whole string eg) \"\""
-                },
-                {
-                    "title": "headers",
-                    "type": "object",
-                    "name": "headers",
-                    "required": false,
-                    "visible": false,
-                    "editable": true,
-                    "value": null,
-                    "tooltip": ""
-                },
-                {
-                    "title": "data",
-                    "type": "object",
-                    "name": "data",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "value": null
-                },
-                {
-                    "title": "parameters",
-                    "type": "object",
-                    "name": "parameters",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "value": null
+                    "tooltip": "should include the whole string eg) \"/api/v1/helloworld\""
                 },
                 {
                     "title": "method",
@@ -108,6 +80,36 @@
                         "OPTIONS",
                         "TRACE"
                     ]
+                },
+                {
+                    "title": "params",
+                    "type": "object",
+                    "name": "params",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": "same as requests library \"params\" will be converted to get in URL"
+                },
+                {
+                    "title": "data",
+                    "type": "object",
+                    "name": "data",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": "same as requests library \"data\" will be converted to get in Body"
+                },
+                {
+                    "title": "headers",
+                    "type": "object",
+                    "name": "headers",
+                    "required": false,
+                    "visible": false,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": "overrides some value in header when header is set here"
                 }
             ],
             "open": false
