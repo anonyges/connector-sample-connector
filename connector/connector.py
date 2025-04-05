@@ -1,15 +1,66 @@
 from connectors.core.connector import Connector
 from connectors.core.connector import get_logger, ConnectorError
 from django.utils.module_loading import import_string
-from .builtins import *
 from .constants import LOGGER_NAME
+from .custom_connector import CustomConnector
 
 logger = get_logger(LOGGER_NAME)
 
 
 class BaseConnector(Connector):
-    def execute(self, config, operation, params, *args, **kwargs):
+    """FortiSOAR Playbook calls this class first. Normmaly it calls the execute, check_health."""
+
+    def execute(self, config: dict, operation: str, params: dict, *args, **kwargs):
+        """When an operation(action) is triggered, it calls this function to trigger an operation.
+
+        Args:
+            config (dict): configuration fields given by user.
+            operation (str): operation(action) which the user calls in string, must match info.json operation field.
+            params (dict): paremeters that the user gives in the action
+
+        Returns:
+            returns (dict, str): Advanced user always returns in json string or dict(json). Try to return as json.dumps(dict).
+        """
         return supported_operations.get(operation)(config, params)
 
-    def check_health(self, config=None, *args, **kwargs):
-        return health_check(config, *args, **kwargs)
+    def check_health(self, config: dict=None, *args, **kwargs):
+        """Check health is called when the new configuration is saved.
+
+        Args:
+            config (dict, optional): configuration fields given by user. Defaults to None.
+
+        Returns:
+            (dict, str): When returned in string, it prompts the value to user.
+        """
+        # To give error on the check_health you can trigger exception with below code.
+        # raise ConnectionError("this is an error!")
+        return check_health(config, *args, **kwargs)
+
+
+def check_health(config: dict, params: dict = None):
+    conn = CustomConnector()
+    return conn.check_health(config, params)
+
+
+def generic_api_call(config: dict, params: dict):
+    conn = CustomConnector()
+    return conn.generic_api_call(config, params)
+
+
+def do_something(config: dict, params: dict) -> dict:
+    conn = CustomConnector()
+    return conn.do_something(config, params)
+
+
+def raise_error(config: dict, params: dict) -> dict:
+    raise ConnectionError("this is an error!")
+    conn = CustomConnector()
+    return conn.raise_error(config, params)
+
+
+supported_operations = {
+    "check_health": check_health,
+    "generic_api_call": generic_api_call,
+    "do_something": do_something,
+    "raise_error": raise_error,
+}
