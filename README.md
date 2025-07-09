@@ -161,15 +161,15 @@ zenuml
   @Actor User
   @ECS FortiSOAR
   group Connector {
-    @Entity "info.json"
-    @Entity "connector.py"
+    @Entity <<Connector>> "info.json"
+    @Entity <<Connector>> "connector.py"
   }
   
   @Starter(User)
-  // `POST /execute_connector`
-  FortiSOAR.post(operation_name, config, params) {
-    "connector.py".post(operation_name, config, params) {
-      execute() {
+  // `POST /api/integration/execute/?format=json`
+  FortiSOAR.execute(config, operation, params) {
+    "connector.py".execute(config, operation, params, params) {
+      supported_operations(operation) {
         return result
       }
       return result

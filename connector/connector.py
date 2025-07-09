@@ -23,7 +23,7 @@ class BaseConnector(Connector):
         """
         return supported_operations.get(operation)(config, params)
 
-    def check_health(self, config: dict=None, *args, **kwargs):
+    def check_health(self, config: dict = None, *args, **kwargs):
         """Check health is called when the new configuration is saved.
 
         Args:
