@@ -4,8 +4,8 @@
     "label": "Sample Connector",
     "description": "Naming convention.\nTitle should be change from \"Sample Connector\" --> \"Organization ProductName\"\nAPI name should change from \"sample-connector\" --> \"org-productName\"",
     "publisher": "anonyges@gmail.com",
-    "icon_small_name": "",
-    "icon_large_name": "",
+    "icon_large_name": "connector_logo_large.png",
+    "icon_small_name": "connector_logo_small.png",
     "category": [
         "Analytics and SIEM"
     ],
@@ -19,8 +19,8 @@
                 "visible": true,
                 "editable": true,
                 "validation": {
-                    "pattern": "^https?:\\/\\/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$",
-                    "patternError": "text for the error message if validation fails"
+                    "pattern": "^https?:\\/\\/(?:(?:(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9])|(?:(?:(?:(?!25?[6-9])[12]\\d|[1-9])?\\d\\.?\\b){4})|(?:(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*(?:[A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9]))(?::\\d+)?$",
+                    "patternError": "Server URL must begin with https? and end without '/'. Port number can be added eg) <https://example.com:80>."
                 }
             },
             {
@@ -64,7 +64,7 @@
                     "visible": true,
                     "editable": true,
                     "value": "",
-                    "tooltip": "should include the whole string eg) \"/api/v1/helloworld\""
+                    "tooltip": "Should include the whole string eg) \"/api/v1/helloworld\""
                 },
                 {
                     "title": "method",
@@ -93,7 +93,7 @@
                     "visible": true,
                     "editable": true,
                     "value": null,
-                    "tooltip": "same as requests library \"params\" will be converted to get in URL"
+                    "tooltip": "Same as requests library \"params\" will be converted to get in URL"
                 },
                 {
                     "title": "data",
@@ -103,7 +103,7 @@
                     "visible": true,
                     "editable": true,
                     "value": null,
-                    "tooltip": "same as requests library \"data\" will be converted to get in Body"
+                    "tooltip": "Same as requests library \"json_data\" will be converted to get in Body"
                 },
                 {
                     "title": "headers",
@@ -113,10 +113,9 @@
                     "visible": false,
                     "editable": true,
                     "value": null,
-                    "tooltip": "overrides some value in header when header is set here"
+                    "tooltip": "Append value in requests headers when headers is set."
                 }
-            ],
-            "open": false
+            ]
         },
         {
             "operation": "do_something",

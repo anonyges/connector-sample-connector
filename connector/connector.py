@@ -1,16 +1,23 @@
 from connectors.core.connector import Connector
 from connectors.core.connector import get_logger, ConnectorError
-from django.utils.module_loading import import_string
-from .constants import LOGGER_NAME
+import json
 from .custom_connector import CustomConnector
 
-logger = get_logger(LOGGER_NAME)
+logger = get_logger("sample-connector")
 
 
 class BaseConnector(Connector):
     """FortiSOAR Playbook calls this class first. Normmaly it calls the execute, check_health."""
 
-    def execute(self, config: dict, operation: str, params: dict, *args, **kwargs):
+    def _get_custom_connector(self, config: dict) -> CustomConnector:
+        """Dummy function to get CustomConnector."""
+        return CustomConnector(
+            url=config.get("url", ""),
+            api_key=config.get("api_key", ""),
+            verify_ssl=config.get("verify_ssl", False),
+        )
+
+    def execute(self, config: dict, operation: str, params: dict, **kwargs):
         """When an operation(action) is triggered, it calls this function to trigger an operation.
 
         Args:
@@ -21,46 +28,29 @@ class BaseConnector(Connector):
         Returns:
             returns (dict, str): Advanced user always returns in json string or dict(json). Try to return as json.dumps(dict).
         """
-        return supported_operations.get(operation)(config, params)
+        selected_operation = getattr(self._get_custom_connector(config), operation)
+        if selected_operation:
+            operation_output: dict = selected_operation(**params)
+            try:
+                json.dumps(operation_output)
+                # try to serialize to json for type checking
 
-    def check_health(self, config: dict = None, *args, **kwargs):
+                return operation_output
+            except Exception as e:
+                raise ConnectionError(
+                    f"operation: {operation} returned data, but the data was not JSON serializable.\noutput of data: {operation_output}\nexception: {e}"
+                )
+
+        raise ConnectorError(f"operation: {operation} not found in custom_connector.py -> CustomConnector")
+
+    def check_health(self, config: dict):
         """Check health is called when the new configuration is saved.
 
         Args:
-            config (dict, optional): configuration fields given by user. Defaults to None.
-
-        Returns:
-            (dict, str): When returned in string, it prompts the value to user.
+            config (dict, optional): configuration fields given by user.
         """
         # To give error on the check_health you can trigger exception with below code.
         # raise ConnectionError("this is an error!")
-        return check_health(config, *args, **kwargs)
-
-
-def check_health(config: dict, params: dict = None):
-    conn = CustomConnector()
-    return conn.check_health(config, params)
-
-
-def generic_api_call(config: dict, params: dict):
-    conn = CustomConnector()
-    return conn.generic_api_call(config, params)
-
-
-def do_something(config: dict, params: dict) -> dict:
-    conn = CustomConnector()
-    return conn.do_something(config, params)
-
-
-def raise_error(config: dict, params: dict) -> dict:
-    raise ConnectionError("this is an error!")
-    conn = CustomConnector()
-    return conn.raise_error(config, params)
-
-
-supported_operations = {
-    "check_health": check_health,
-    "generic_api_call": generic_api_call,
-    "do_something": do_something,
-    "raise_error": raise_error,
-}
+        conn = self._get_custom_connector(config)
+        conn._check_health()
+        return

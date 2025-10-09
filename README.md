@@ -3,6 +3,12 @@
 FortiSOAR sample connector
 Sample connector to provide developer tutorials.
 
+## Changelog
+
+### Version 1.0.0
+
+Something here!
+
 ## Regex for validations
 
 ### HTTP/HTTPS Full URL
