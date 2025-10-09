@@ -42,7 +42,7 @@ References
 Regex
 
 ```regex
-^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b$
+^https?:\/\/(?:(?:(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9])|(?:(?:(?:(?!25?[6-9])[12]\d|[1-9])?\d\.?\b){4})|(?:(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*(?:[A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9]))(?::\d+)?$
 ```
 
 Matching cases
@@ -50,10 +50,17 @@ Matching cases
 ```text
 https://www.test.com
 https://test.com
+https://localhost
 
 http://www.test.com
 http://test.com
-http://username:password@example.com
+http://localhost
+
+
+https://www.test.com:123
+https://test.com:123
+https://localhost:123
+
 ```
 
 Not matching cases
