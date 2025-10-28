@@ -10,10 +10,10 @@ class CustomConnector:
         self._check_url(url)
 
     def _check_url(self, url: str):
-        if not (self.url.startswith("https://") or self.url.startswith("http://")):
+        if not (url.startswith("https://") or url.startswith("http://")):
             raise Exception("config url must start with 'https://' or 'http://'")
 
-        if self.url.endswith("/"):
+        if url.endswith("/"):
             raise Exception("config url must not end with '/'")
 
     def _check_api_endpoint(self, api_endpoint: str):

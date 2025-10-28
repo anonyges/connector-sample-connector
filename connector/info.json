@@ -96,9 +96,9 @@
                     "tooltip": "Same as requests library \"params\" will be converted to get in URL"
                 },
                 {
-                    "title": "data",
+                    "title": "json_data",
                     "type": "object",
-                    "name": "data",
+                    "name": "json_data",
                     "required": false,
                     "visible": true,
                     "editable": true,
@@ -121,15 +121,13 @@
             "operation": "do_something",
             "title": "Do Something",
             "description": "Do Something and Returns Something.",
-            "enabled": true,
-            "open": false
+            "enabled": true
         },
         {
             "operation": "raise_error",
             "title": "Raise Error",
             "description": "Raise Error!",
-            "enabled": true,
-            "open": false
+            "enabled": true
         }
     ]
 }
